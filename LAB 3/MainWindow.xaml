@@ -1,0 +1,160 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BookingSystem.Gym"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="BookingSystem.Gym.MainWindow"
+        Title="Gym Booking" Height="450" Width="600"
+        Background="#FFFFFF">
+
+    <Window.Resources>
+        <local:DateComparisonConverter x:Key="DateComparisonConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <!--Scroll Bar-->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+            <!-- Setting the Background -->
+            <ScrollViewer.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#D7C1E1" Offset="0.0"/>
+                    <GradientStop Color="#E0D3E8" Offset="0.3"/>
+                    <GradientStop Color="#F1EAF4" Offset="0.6"/>
+                    <GradientStop Color="#F8F5FA" Offset="0.8"/>
+                    <GradientStop Color="#00FFFFFF" Offset="1.0"/>
+                </LinearGradientBrush>
+            </ScrollViewer.Background>
+
+            <Grid x:Name="MainPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+
+                <Grid x:Name="LoginGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="64*"/>
+                        <RowDefinition Height="68*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- StackPanel for LogIn -->
+                    <StackPanel x:Name="LoginPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="1" Grid.RowSpan="3">
+                        <TextBlock Text="GYM LOGIN" FontFamily="Segoe UI" FontSize="28" FontWeight="Bold" Foreground="#83579A" TextAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock Text="Please log in to continue" FontFamily="Segoe UI" FontSize="16" FontStyle="Italic" HorizontalAlignment="Center" Foreground="#83579A" Margin="0,10"/>
+
+                        <!-- LogIn button -->
+                        <Button Content="Log In" Click="LoginButton_Click" Margin="0,10" Background="#FFB3D9" Foreground="White" BorderBrush="White" FontFamily="Segoe UI" FontWeight="Bold" Width="100" Height="28" RenderTransformOrigin="0.5,0.5">
+                            <Button.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="0.447"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Button.RenderTransform>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- StackPanel for menu after login as member -->
+                    <StackPanel x:Name="LoginPanel2" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed" Background="#EEEEEF" Margin="0,63,0,0" Panel.ZIndex="0" Grid.Row="1" >
+                        <!-- Log in -->
+                        <TextBlock Text="GYM" FontFamily="Segoe UI" FontSize="32" FontWeight="Bold" Foreground="#83579A" TextAlignment="Center" Margin="0,0,0,10"/>
+
+                        <!-- Username Id & password -->
+                        <TextBlock Text="User Id" FontFamily="Segoe UI" FontSize="16" Foreground="#83579A" Margin="10"/>
+                        <TextBox x:Name="UserIdTextBox" Width="200" Height="30" Margin="20" Padding="5" Background="#EEEEEF" Foreground="#83579A" BorderBrush="#83579A" BorderThickness="1" FontSize="14"/>
+
+                        <TextBlock Text="Password" FontFamily="Segoe UI" FontSize="16" Foreground="#83579A" Margin="10"/>
+                        <PasswordBox x:Name="PasswordBox" Width="200" Height="30" Margin="0,5" Padding="5" Background="#EEEEEF" Foreground="#83579A" BorderBrush="#83579A" BorderThickness="1"/>
+
+                        <!-- Confirm Login Button -->
+                        <Button Content="Confirm" Click="ConfirmLoginButton_Click" Margin="0,40" Background="#FFB3D9" BorderBrush="White" Foreground="white" FontWeight="DemiBold" FontSize="16" Width="100" Height="30" />
+
+                    </StackPanel>
+                </Grid>
+
+                <!-- StackPanel for second menu after logIn -->
+                <Grid Grid.Row="2" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="SecondMenuPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="94,20,0,0" Visibility="Collapsed" Panel.ZIndex="2" Grid.Column="1" Height="Auto" Width="Auto">
+                        <StackPanel.Background>transparent</StackPanel.Background>
+
+                        <!-- Gym title -->
+                        <TextBlock Text="GYM" FontFamily="Segoe UI" FontSize="28" FontWeight="Bold" Foreground="#83579A" TextAlignment="Center" Margin="0,0,0,10"/>
+                        <Separator Background="#83579A" Height="2" Margin="0,10"/>
+
+                        <!-- Menu options -->
+                        <TextBlock Text="What would you like to do today?" HorizontalAlignment="Center" FontFamily="Segoe UI" FontSize="16" FontWeight="Bold" Foreground="#83579A" Margin="0,10, 0, 40"/>
+                        <Button Content="Book Session" Click="BookSession_Click" FontFamily="Segoe UI" FontSize="12" Background="#FFB3D9" BorderBrush="White" Foreground="White" Width="200" Height="28" Margin="0,5"/>
+                        <Button Content="Cancel Session" Click="CancelSession_Click" FontFamily="Segoe UI" FontSize="12" Background="#D88EBE" BorderBrush="White" Foreground="white" Width="200" Height="28" Margin="0,5, 0, 30"/>
+                        <Button Content="Log Out" Click="LogOutButton_Click" Margin="0,10, 0, 0" Background="#E78686" BorderBrush="White" Foreground="White" FontFamily="Segoe UI" FontSize="12" Width="50" Height="21"/>
+                        <Button Content="Exit" Foreground="White" BorderBrush="White" Background="#E78686" Click="Exit_Click" Margin="0,10, 0, 30" Width="25" Height="21"/>
+
+                        <!-- ListView to display available gym sessions -->
+                        <ListView x:Name="SessionsListView" Height="150" Margin="10" SelectionChanged="SessionsListView_SelectionChanged" Visibility="Collapsed">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="#2E2E2E"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Style.Triggers>
+                                        <!-- Trigger for today's sessions -->
+                                        <DataTrigger Binding="{Binding Time, ConverterParameter=Today, Converter={StaticResource DateComparisonConverter}}" Value="True">
+                                            <Setter Property="Background" Value="#D4B4D2"/>
+                                        </DataTrigger>
+                                        <!-- Trigger for tomorrow's sessions -->
+                                        <DataTrigger Binding="{Binding Time, ConverterParameter=Tomorrow, Converter={StaticResource DateComparisonConverter}}" Value="True">
+                                            <Setter Property="Background" Value="#D7C1E1"/>
+                                        </DataTrigger>
+                                        <!-- Trigger for other days -->
+                                        <DataTrigger Binding="{Binding Time, ConverterParameter=Other, Converter={StaticResource DateComparisonConverter}}" Value="True">
+                                            <Setter Property="Background" Value="#E0D3E8"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Session" DisplayMemberBinding="{Binding GymPass}" Width="100"/>
+                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Time, StringFormat=\{0:dd/MM\}}" Width="100"/>
+                                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time, StringFormat=\{0:HH:mm\}}" Width="100"/>
+                                    <GridViewColumn Header="Spots" DisplayMemberBinding="{Binding AvailableSpots}" Width="100"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <!-- Search function -->
+                        <StackPanel x:Name="SearchPanel" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50, 0, 20">
+                            <TextBlock Text="Search Sessions" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="#83579A" Margin="0,20,0,0"/>
+
+                            <TextBlock Text="Select Date:" HorizontalAlignment="Left" Foreground="black" Height="28" FontFamily="Segoe UI" FontSize="12" Margin="0,20,0,0"/>
+                            <DatePicker x:Name="SearchDatePicker" Width="200" Height="28" Background="White" Foreground="#83579A" BorderBrush="#83579A" Margin="0,-5,0,0"/>
+
+                            <TextBlock Text="Select Time:" Foreground="black" FontFamily="Segoe UI" FontSize="12" Margin="0,20,0,0"/>
+                            <ComboBox x:Name="SearchTimeComboBox" Width="200" Margin="0,5" Height="28" Background="white" Foreground="#83579A" BorderBrush="#83579A">
+                                <ComboBoxItem Content="09:00"/>
+                                <ComboBoxItem Content="10:00"/>
+                                <ComboBoxItem Content="11:00"/>
+                                <ComboBoxItem Content="16:00"/>
+                                <ComboBoxItem Content="17:00"/>
+                                <ComboBoxItem Content="20:00"/>
+                                <ComboBoxItem Content="21:00"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Workout:" Foreground="Black" FontFamily="Segoe UI" FontSize="12" Margin="0,15,0,0"/>
+                            <TextBox x:Name="SearchPassTextBox" Width="200" Height="28" Margin="0,5" Padding="5" Background="white" Foreground="#83579A" BorderBrush="#83579A" BorderThickness="1" FontFamily="Segoe UI" FontSize="12"/>
+
+                            <Button Content="Search" Click="SearchButton_Click" FontFamily="Segoe UI" Margin="0,10" Background="#FFB3D9" BorderBrush="White" Foreground="White" Width="100" Height="28"/>
+                        </StackPanel>
+
+                        <!-- Canvas for display area -->
+                        <Canvas x:Name="DisplayArea" Background="Transparent" Height="200" Margin="0,10"/>
+                       
+                        <TextBlock x:Name="StatusMessage" Foreground="#D9534F" Margin="10" FontFamily="Segoe UI" FontSize="14" TextWrapping="Wrap"/>
+                        
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>
+
